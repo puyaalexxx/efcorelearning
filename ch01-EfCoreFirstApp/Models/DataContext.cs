@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EfCoreFirstApp.Models;
+namespace ch01;
 
 public class DataContext : DbContext
 {

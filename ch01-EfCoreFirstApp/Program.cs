@@ -1,14 +1,41 @@
-namespace EfCoreFirstApp;
+using ch01;
+using Microsoft.EntityFrameworkCore;
 
-public class Program
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddMvc();
+builder.Services.AddDbContext<DataContext>(options =>
 {
-    public static void Main(string[] args)
-    {
-        var builder = WebApplication.CreateBuilder(args);
-        var app = builder.Build();
+    //display sql parameters
+    options.EnableSensitiveDataLogging(true);
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    );
+});
 
-        app.MapGet("/", () => "Hello World!");
+var app = builder.Build();
 
-        app.Run();
-    }
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
 }
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+
+app.UseStatusCodePages();
+app.UseStaticFiles();
+
+app.UseRouting(); // Enable routing
+
+// Define endpoint routes directly
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();

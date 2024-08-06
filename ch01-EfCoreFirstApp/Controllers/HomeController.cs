@@ -1,7 +1,6 @@
-﻿using EfCoreFirstApp.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace EfCoreFirstApp.Controllers;
+namespace ch01;
 
 public class HomeController : Controller
 {
